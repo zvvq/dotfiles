@@ -1,0 +1,57 @@
+choco install cascadiacodepl
+choco install cascadiamonopl
+choco install cascadiafonts
+
+choco install cmder
+choco install cygwin
+choco install conemu
+choco install git
+choco install msys2
+choco install terminus
+choco install hyper
+choco install fluent-terminal
+choco install microsoft-windows-terminal
+
+choco install msys2-installer
+choco install msys2
+choco install poshwith
+choco install jivkok.shell1
+
+
+choco install lsd
+choco install hyperfine
+choco install xplorer2pro
+choco install take-command
+choco install shellcheck
+
+choco install gitter
+
+choco install microsoft-powershellforgithub-psmodule
+choco install terminal-icons.powershell
+choco install posh-github
+
+choco install get-childitemcolor
+choco install starship.portable
+choco install starship.portable
+choco install sublimetext3.powershellalias
+choco install echoargs
+choco install powershellplus
+choco install poshgit
+choco install pwsh
+choco install powershell-core
+
+choco install vim-console
+choco install sudo
+
+choco install mc
+
+# database
+choco install sqliteexpert.install
+choco install sqlitebrowser.portable
+choco install beekeeper-studio
+choco install sqliteadmin
+choco install sqlitestudio
+choco install tableplus
+choco install sqlite.shell
+choco install sqlite
+choco install less
