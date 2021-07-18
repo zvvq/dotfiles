@@ -1,0 +1,15 @@
+winget install
+pkgs 
+	code52.Carnac
+	Microsoft.VisualStudioCodeInsiders.User-x64
+	Microsoft.VisualStudioCode.User-x64
+	GitHub.Atom
+	GitHub.cli
+	GitHub.GitHubDesktopBeta
+	SublimeHQ.SublimeMerge
+	Axosoft.GitKraken
+	PenguinLabs.Cacher
+	
+	Logitech.Options
+	Logitech.UnifyingSoftware
+	
