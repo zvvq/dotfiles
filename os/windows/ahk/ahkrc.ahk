@@ -1,9 +1,21 @@
+; Capslock to ctrl, esc alone
+; InstallKeybdHook
+SetCapsLockState, alwaysoff
+Capslock::
+Send {LControl Down}
+KeyWait, CapsLock
+Send {LControl Up}
+if ( A_PriorKey = "CapsLock" )
+{
+    Send {Esc}
+}
+return
 ; Focus Groove Music
 ^!g::  ; Ctrl+Alt+g
 if WinExist("Groove Music")
     WinActivate
 else
-    Send #5
+    Send #9
 return
 
 ; Open blank Notepad
