@@ -28,14 +28,14 @@
              :type       "osascript -e 'tell application \"System Events\" to keystroke \"%s\" as text'"
             ;; :focus      "/usr/local/bin/yabai -m display --focus \"%s\" & /usr/local/bin/yabai -m space --focus \"%s\""}
              }
- :layers {:yabai-move-mode       {:key :f :condi :tab-mode}
-             :yabai-scale-mode      {:key :c :condi :tab-mode}
+ :layers {   :yabai-scale-mode      {:key :c :condi :tab-mode}
              :spec-mode             {:key :s :condi :tab-mode}
              ;; :yabai-insert-mode     {:key :i :condi :tab-mode}
              :emacs-windmove-mode   {:key :q :condi [:Emacs :!comma-mode :!period-mode]}
              :emacs-windresize-mode {:key :c :condi :emacs-windmove-mode}
              :emacs-bufmove-mode    {:key :f :condi :emacs-windmove-mode}}
  :simlayers {:contexts-f-mode {:key :f}
+             :yabai-move-mode       {:key :f :condi :tab-mode}
              :comma-mode            {:key :comma :condi [:!emacs-s-mode :!tmux-windmove-mode]}
              :tmux-windmove-mode    {:key :q :condi [:Terminals :!comma-mode :!period-mode]}
              :tmux-windresize-mode  {:key :c :condi :tmux-windmove-mode} 
@@ -60,6 +60,8 @@
              :r-mode {:key :r}
              :s-mode {:key :s}
              :v-mode {:key :v}
+             :m-mode {:key :m}
+             :slash-mode {:key :slash}
              }
 ;; ------------ Cheatsheet ------------
  ;; ! stand for mandatory
@@ -94,8 +96,6 @@
      {:des   "Change right_command to command-tab when used alone"
               :rules [[:right_command :right_command nil {:alone :prev_app}]
                       [:application :right_command nil {:alone :prev_app}]]}
-             {:des   "Change left_option to f18 when used alone"
-              :rules [[:left_option :left_option nil {:alone [:f18]}]]}
      {:des "RF Modifiers right cmd -> Alfred/left opt -> cmd+tab"
          :rules [:rf
 	        [:##right_option :right_command nil {:alone :!CTOSspacebar}]
@@ -109,17 +109,35 @@
                       [[:j :l] [:f19 ["in-alfred" 1]]]
                       [[:j :k] [:alfred "search google" "net.deanishe.alfred-searchio"]]
                       [[:j :semicolon] [:alfred "search tabs" "net.deanishe.alfred.safari"]]
-                      [[:l :n] [[:alf "winswitch" "ru.mandrigin.alfred.sww"] ["in-alfred" 1]]]]}
+                      [[:l :n] [[:alfred "winswitch" "ru.mandrigin.alfred.sww"] ["in-alfred" 1]]]]}
         {:des "ksim"
          :rules [[[:k :l] [:alfred "search dash" "com.kapeli.dash.workflow"]]
                  [[:k :m] [:alfred "search youtube" "net.deanishe.alfred-searchio"]]]}
+        {:des "mkey (dash)"
+         :rules [:m-mode
+                 [:3 [:alfred "search alfred" "nikivi.utilities" "d3 "]]
+                 [:q [:alfred "search alfred" "nikivi.utilities" "tldr "]]
+                 ;[:w [:alfred "search alfred" "nikivi.utilities" "django "]]
+                 [:w [:alfred "search alfred" "nikivi.utilities" "ts "]]
+                 [:e [:alfred "search alfred" "nikivi.utilities" "html "]]
+                 [:r [:alfred "search alfred" "nikivi.utilities" "react "]]
+                 [:a [:alfred "search alfred" "nikivi.utilities" "man "]]
+                 ;[:s [:alfred "search alfred" "nikivi.utilities" "electron "]]
+                 ;[:d [:alfred "search alfred" "nikivi.utilities" "docker "]]
+                 [:f [:alfred "search alfred" "nikivi.utilities" "apple "]]
+                 [:s [:alfred "search alfred" "nikivi.utilities" "lodash "]]
+                 [:d [:alfred "search alfred" "nikivi.utilities" "node "]]
+                 [:g [:alfred "search alfred" "nikivi.utilities" "godoc "]]
+                 [:c [:alfred "search alfred" "nikivi.utilities" "css "]]
+                 [:v [:!CTw :b]]
+                 [:b [:alfred "search bash" "com.kapeli.dash.workflow"]]]}
         {:des   "launcher mode"
          :rules [:launch-mode
                 ;;  [:e [:open "/Applications/Emacs.app"]]
                 ;;  [:e [:show "Emacs"]]
                  [:k [:km "open: Safari"]]
                  [:j [:km "open: iTerm"]]
-                ;;  [:j [:opena "kitty"]]
+                ;  [:j [:opena "kitty"]]
                  [:semicolon [:km "open: Xcode"]]
                  [:quote [:km "open: Console"]]
                  [:c [:km "open: Spotify"]]
@@ -508,7 +526,9 @@
                  [:j [:alfred "search repos" "me.lachlan.githubjump"]]
                  [:c [:alfred "search emoji" "com.github.jsumners.alfred-emoji"]]
                  ]}
-             
+      {:des "slash-mode (snippets)"
+        :rules [:slash-mode
+                 [:b :!S1]]}
             {:des   "global C-h to backspace"
                  :rules [[:!Th :delete_or_backspace nil {:params {:alone 500 :held 500}}]]}]
  :devices {:macbook-air [{:product_id 641 :vendor_id 1452}]
