@@ -37,6 +37,7 @@ zinit load zdharma/zsh-diff-so-fancy
             'zdharma/fast-syntax-highlighting' \
             'hlissner/zsh-autopair'            \
             'rupa/z'                           \
+	    'ogham/exa'                        \
             'wfxr/forgit'                      \
             'wfxr/forepos'                     \
             'wfxr/epoch-cli'                   \

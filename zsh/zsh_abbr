@@ -12,9 +12,9 @@ abbr untar='tar xvf'
 
 abbr md='mkdir -p'
 abbr rd=rmdir
-abbr cp="cp -iv"                       
-abbr mv="mv -iv" 
-abbr ldir="ls -al | grep ^d"           
+abbr cp="cp -iv"
+abbr mv="mv -iv"
+abbr ldir="ls -al | grep ^d"
 abbr agall='ag --silent --hidden -g ""'
 abbr agdot='ag --silent --hidden -g ".[^/]+"'
 
