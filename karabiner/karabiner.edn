@@ -60,8 +60,25 @@
              :r-mode {:key :r}
              :s-mode {:key :s}
              :v-mode {:key :v}
+             :2-mode {:key :2}
+             :3-mode {:key :3}
+             :4-mode {:key :4}
+             :d-mode {:key :d}
+             :i-mode {:key :i}
+             :f-mode {:key :f}
+             :n-mode {:key :n}
              :m-mode {:key :m}
+             :x-mode {:key :x}
              :slash-mode {:key :slash}
+             :space-mode {:key :spacebar}
+             :dot-mode {:key :period}
+             :spacebar-mode {:key :spacebar}
+             :go-mode {:key :period :condi ["in-go" 1]}
+             :js-mode {:key :period :condi ["in-js" 1]}
+             :swift-mode {:key :period :condi ["in-swift" 1]}
+             :rust-mode {:key :period :condi ["in-rust" 1]}
+             :py-mode {:key :period :condi ["in-python" 1]}
+             :elixir-mode {:key :period :condi ["in-elixir" 1]}
              }
 ;; ------------ Cheatsheet ------------
  ;; ! stand for mandatory
@@ -113,6 +130,37 @@
         {:des "ksim"
          :rules [[[:k :l] [:alfred "search dash" "com.kapeli.dash.workflow"]]
                  [[:k :m] [:alfred "search youtube" "net.deanishe.alfred-searchio"]]]}
+
+        {:des "ikey (symbols)"
+         :rules [:i-mode
+                 [:1 :!S1]
+                 [:2 :!S2]
+                 [:3 :!Sequal_sign]
+                 [:4 :!S8]
+                 [:5 :!S5]
+                 [:q :!Sopen_bracket]
+                 [:w :!S9]
+                 [:e :!S3]
+                 [:r :!Squote]
+                 [:t :quote]
+                 [:o :open_bracket] ; [
+                 [:p :close_bracket] ; ]
+                 [:open_bracket :!Sclose_bracket] ; }
+                 [:caps_lock [:km "Match symbols"]]
+                 [:a :slash]
+                 [:s :!Shyphen]
+                 [:d :backslash]
+                 [:f :hyphen]
+                 [:g :!S4]
+                 [:j :equal_sign]
+                 [:l [:hyphen :!Speriod :spacebar]] ; -> arrow (->)
+                 [:semicolon :semicolon]
+                 [:grave_accent_and_tilde :!Sgrave_accent_and_tilde] ; -> //
+                 [:z :!Sslash]
+                 [:x :!Sbackslash]
+                 [:c :!S7]
+                 [:v :!Scomma]
+                 [:b [:slash :slash :spacebar]]]} ; -> //
         {:des "mkey (dash)"
          :rules [:m-mode
                  [:3 [:alfred "search alfred" "nikivi.utilities" "d3 "]]
@@ -174,8 +222,8 @@
                       :alfred-mode
                       [:i [:z :i]]
                       [:j [:alfred "search repos" "me.lachlan.githubjump"]]
-                      ; [:h [[:alf "search repos" "com.yqrashawn.ghjump"] ["in-alfred" 1]]]
-                      [:g [:alf "searchGithub" "nikivi.search-the-web"]]
+                      ; [:h [[:alf "search repos" "me.lachlan.githubjump"] ["in-alfred" 1]]]
+                      [:g [:alf "search github" "nikivi.search-the-web"]]
                       [:##return_or_enter [["in-alfred" 1] [:alf "web searches" "nikivi.web.searches"]]]
                       [:x [:alf "killProcess" "com.ngreenstein.alfred-process-killer"]]
                       [:u [:alf "repos" "net.deanishe.alfred-git-repos"]]
@@ -192,8 +240,54 @@
                       [:hyphen :!!hyphen]
                       [:spacebar "~/Dropbox/sync/pullover/pullover-start-or-finish"]
                       #_[:right_command :!!3]]}
-{:des "vkey (media)"
-         :rules [:v-mode
+                {:des "2key (move + alfred)"
+         :rules [:2-mode
+                 [:o [:alfred "soulver" "app.soulver.alfredworkflow"]]
+                 [:j :!Cdown_arrow]
+                 [:k :!Cup_arrow]
+                 [:l :!Cright_arrow]
+                 [:h :!Cleft_arrow]
+                 [:semicolon :!Oup_arrow]
+                 [:quote :!Odown_arrow]
+                 [:spacebar :!COSu]]} ; Selection -> HN
+        {:des "3key (open files + projects)"
+         :rules [:3-mode
+                 [:r [:km "proj: LA"]]
+                 [:i [:km "edit: Likes"]]
+                 [:o [:km "edit: Projects"]]
+                 [:t [:km "edit: Git config"]]
+                 [:h [:km "wiki: Used hotkeys"]]
+                 [:j [:km "edit: Aliases"]]
+                 [:k [:km "edit: Zsh functions"]]
+                 ;[:l [:km "Search current safari url in wiki"]]
+                 [:l [:km "proj: epictools.dev"]]
+                 [:semicolon [:km "proj: Knowledge"]]
+                 [:quote [:km "wiki: Summary"]]
+                 [:n [:km "proj: Dotfiles"]]
+                 [:m [:km "proj: Home"]]
+                 [:comma [:km "edit: Now"]]
+                 [:period [:km "edit: GitHub Bio"]] ; TODO: 
+                 [:spacebar :!CSOp]]} ; Selection -> Reddit
+        {:des "4key (open curated lists)"
+         :rules [:4-mode
+                 [:r [:km "edit: Web Searches"]]
+                 [:t [:km "list: Newsletters"]]
+                 [:o [:km "list: Blogs"]]
+                 [:p [:km "list: Podcasts"]]
+                 [:k [:km "list: Alfred workflows"]]
+                 [:l [:km "list: Command line tools"]]
+                 [:n [:km "list: Events"]]]}
+        {:des "tabkey (websites)"
+         :rules [:tab-mode
+                 ;[:j :!SOTw] ; Replies
+                 ;[:k :!SOTf] ; App specific
+                 ;[:l :!SOTr] ; Personal
+                 [:j [:km "w: nikitavoloboev.xyz"]]
+                 [:k [:km "w: GitLab"]]
+                 [:l [:km "w: Repl.it"]]
+                 [:period [:km "w: CodeSandbox"]]]}
+        {:des "vkey (media)"
+                 :rules [:v-mode
                  [:q :illumination_decrement]
                  [:w :illumination_increment]
                  [:e [:km "Change macOS appearance (dark/light)"]]
@@ -509,6 +603,67 @@
                       [:!OSj :!OSdown_arrow]
                       [:!OSk :!OSup_arrow]
                       [:!OSl :!OSright_arrow]]}
+        {:des "nkey (alfred)"
+         :rules [:n-mode
+                 [:1 :!O1]
+                 [:2 :!O2]
+                 [:3 :!O3]
+                 [:4 :!O4]
+                 [:5 :!O5]
+                 [:6 :!O6]
+                 [:q [:alfred "search github" "nikivi.search.the.web"]]
+                 [:w [:alfred "search twitter" "nikivi.search.the.web"]]
+                 [:e [:alfred "search subs" "net.deanishe.alfred-reddit"]]
+                 [:r [:alfred "search reddit" "nikivi.search.the.web"]]
+                 [:t [:alfred "ssh" "net.deanishe.alfred-ssh"]]
+                 [:a [:alfred "search shares" "nikivi.ask.create.share"]]
+                 [:s [:alfred "search websites" "nikivi.web.searches"]]
+                 [:d [:alfred "search stack overflow" "net.deanishe.alfred-stackoverflow"]]
+                 ;[:d [:alfred "search packages" "com.sindresorhus.npms"]]
+                 [:f [:alfred "search repos" "me.lachlan.githubjump"]]
+                 [:g [:alfred "search godoc" "nikivi.search.the.web"]]
+                 [:h [:alfred "search hn" "nikivi.search.the.web"]]
+                 [:grave_accent_and_tilde [:alfred "search learn anything" "nikivi.learn.anything"]]
+                 [:z [:alfred "search lobsters" "nikivi.search.the.web"]]
+                 [:x [:alfred "search stack" "net.deanishe.alfred-stackoverflow"]]
+                 [:c [:alfred "search wiki" "nikivi.mind"]]
+                 [:v [:alfred "search links" "nikivi.mind"]]
+                 ;[:v [:alfred "search pinboard" "nikivi.search.the.web"]] ; TODO: topics/search/more?
+                 [:b [:alfred "search bookmarks" "net.deanishe.alfred.safari"]]
+                 [:spacebar [:alfred "search history" "net.deanishe.alfred.safari"]]]}
+        {:des "spacekey (websites)"
+         :rules [:spacebar-mode
+                 ;[:tab :!CO5] ; TODO: Configure ScreenFlow recording
+                 [:q [:km "open: CleanShot"]]
+                 [:w :!TO3] ; Screenshot -> CleanShot
+                 [:e :!TO2] ; Screenshot -> Clipboard
+                 [:r :!CS4] ; Screenshot -> ~/Desktop
+                 [:j :down_arrow]
+                 ;[:t :!TOCp] ; Screenshot -> Imgur
+                 ;[:t :!TOCp] ; Screenshot -> Imgur (auth)
+                 ;[:t :!COS4] ; Screenshot -> CleanShot (cloud)
+                 ;[:i [:km "w: Google Sheets"]]
+                ;;  [:i [:km "w: GitHub (notifications)"]] ; TODO: jump between GitHub (issues/prs)
+                ;;  [:o [:km "w: Google Docs"]]
+                ;;  [:open_bracket [:km "w: Google Slides"]]
+                ;;  [:close_bracket [:km "w: Beautiful.ai"]]
+                 [:a :!TO4] ; CleanShot recording
+                 ;[:s :!CO5] ; TODO: Pause/unpause ScreenFlow recording
+                 [:f :!CTOSg] ; Loom recording
+                ;;  [:g :!CO5] ; Start/stop ScreenFlow recording
+                ;;  [:h [:km "w: Roam Research"]]
+                ;;  [:j [:km "w: Excalidraw"]]
+                ;;  [:k [:km "w: GitHub"]]
+;;                  [:l [:km "w: Localhost"]]
+;;                  [:semicolon [:km "w: StackBlitz"]]
+;;                  [:quote [:km "w: Learn Anything"]]
+;;                  [:b [:km "w: Digital Ocean"]]
+;;                  [:n [:km "w: GCP"]]
+;;                  [:m [:km "w: AWS"]]
+;;                  [:comma [:km "w: Diagrams"]]
+;;                  [:period [:km "w: YouTube"]]
+                 [:slash [:km "w: GitHub PR"]]]} ; TODO:
+;; ]}        
         {:des "okey (alfred)"
          :rules [:o-mode
                  [:1 :!C1]
@@ -525,7 +680,115 @@
                  [:equal_sign :!Cequal_sign]
                  [:k [:km "open: Keycastr"]]
                  [:c [:alfred "search emoji" "com.github.jsumners.alfred-emoji"]]
+                 [:a [:alfred "search files" "nikivi.manage.notes"]] ; TODO: add blog, drafts
+                 [:s [:alfred "search code" "nikivi.manage.notes"]]
+                 [:d [:alfred "search repos" "net.deanishe.alfred-git-repos"]]
+                 [:j [:alfred "run" "iansinnott.keyboardmaestro"]]
+                 [:f [:alfred "search folders" "nikivi.search.folders"]]
                  ]}
+        {:des "xkey (spotify)"
+         :rules [:x-mode
+                 [:o [:km "Paste current Spotify song link"]]
+                 [:open_bracket [:alfred "twitter_search_current_track" "com.vdesabou.spotify.mini.player"]]
+                 [:close_bracket [:alfred "add_current_track_to" "com.vdesabou.spotify.mini.player" "spotify:playlist:2N82DnDsPGMnpJhN8sVFJu"]] ; Add song to Bliss playlist
+                 [:j [:alfred "show_alfred_playlist" "com.vdesabou.spotify.mini.player"]]
+                 [:k [:alfred "show_current_track" "com.vdesabou.spotify.mini.player"]]
+                 [:semicolon [:alfred "add_current_track_to_alfred_playlist_or_your_music" "com.vdesabou.spotify.mini.player"]] ; Add song to Likes playlist
+                 [:quote [:alfred "add_current_track_to" "com.vdesabou.spotify.mini.player" "spotify:playlist:0ESjwZeTcHOWzY3FYO5zs5"]] ; Add song to Focus playlist
+                 [:n [:alfred "add_current_track_to" "com.vdesabou.spotify.mini.player"]]
+                 [:m [:alfred "remove_current_track_from" "com.vdesabou.spotify.mini.player"]]
+                 ;[:comma [:alfred "youtube_search_current_track" "com.vdesabou.spotify.mini.player"]] ; TODO: twitter search
+                 [:comma [:alfred "show_search_online" "com.vdesabou.spotify.mini.player"]] ; TODO: split up further into binds for direct searches of tracks/artists/all
+                 [:period [:alfred "youtube_search_current_track" "com.vdesabou.spotify.mini.player"]]
+                 [:slash [:alfred "reddit_search_current_track" "com.vdesabou.spotify.mini.player"]]]}
+        {:des "skey (essential)"
+         :rules [:s-mode
+                 [:w [:!Oleft_arrow :!OSright_arrow]] ; Highlight word
+                 [:e :tab]
+                 [:r :!Stab]
+                 [:t :!Sreturn_or_enter]
+                 [:u :!COp] ; Selection -> HasteBin link
+                 [:i :!CTperiod] ; Contexts search active windows
+                 [:o :!Cx] ; Cut
+                 ;[:open_bracket :!Oleft_arrow]
+                 [:open_bracket [:km "Lowercase selected text"]]
+                 [:close_bracket [:km "Uppercase selected text"]]
+                 [:a :!Cc] ; Copy
+                 [:d :delete_or_backspace]
+                 [:f :return_or_enter]
+                 [:g :!Ctab]
+                 [:##h :left_arrow]
+                 [:##j :down_arrow]
+                 [:##k :up_arrow]
+                 [:##l :right_arrow]
+                 [:semicolon :!CTO0] ; Search Alfred Snippets
+                 [:quote [:!Cleft_arrow :!CSright_arrow]] ; Highlight current line
+                 [:c :!Cdelete_or_backspace]
+                 [:v :left_shift]
+                 [:##b :!Cleft_arrow]
+                 [:n :!Cv] ; Paste
+                 [:##m :!Cright_arrow]
+                 [:period :!COS0]]} ; Selection -> Alfred Snippets TODO:                  
+        {:des "commakey (words)"
+         :rules [:comma-mode
+                 [:w [:n :i :k :i :v :i]] ; -> nikivi
+                 [:a [:n :i :k :i :t :a :v :o :l :o :b :o :e :v ]]]} ; -> nikitavoloboev
+         {:des "dotkey (1-3, q-u, caps, tab)"
+          :rules [:dot-mode
+                  [:1 [:!Sc :l :o :s :e :spacebar :!S3]] ; -> Close #
+                  [:2 [:!Sr :e :f :spacebar :!S3]] ; -> Ref #
+                  [:3 [:!Sf :i :x :spacebar :!S3]] ; -> Fix #
+                  [:q [:!Sa :spacebar :slash :slash :spacebar]] ; -> // (on same line)
+                  [:w [:km "VSCode/XCode/Sublime comment on top of line"]]
+                  [:e [:!St :!So :!Sd :!So :!Ssemicolon :spacebar]] ; -> TODO:
+                  [:r [:km "VSCode/XCode/Sublime comment on top of line with TODO"]]
+                  [:t [:!Sn :!So :!St :!Se :!Ssemicolon :spacebar]] ; -> NOTE:
+                  [:y [:p :l :e :a :s :e :spacebar]] ; -> please
+                  [:u [:u :p :d :a :t :e :spacebar]] ; -> update
+                  [:caps_lock [:!Cf :!St :!So :!Sd :!So :!Ssemicolon :return_or_enter]] ; -> search TODO: in file
+                  [:grave_accent_and_tilde [:!CSf :!St :!So :!Sd :!So :!Ssemicolon :return_or_enter]] ; -> search TODO: globally
+                  [:left_gui [:!St :h :a :n :k :s :spacebar]] ; -> Thanks
+                  [:spacebar [:!St :h :a :n :k :spacebar :y :o :u :period :spacebar]]]} ; -> Thank you.
+         {:des "jsdot"
+          :rules [:js-mode
+                  [:tab [:km "w: MDN"]]
+                  [:a [:c :o :n :s :o :l :e :period :l :o :g :!S9 :!S0 :left_arrow]] ; -> console.log()
+                  ;[:a [:c :o :n :s :o :l :e :period :w :a :r :n :!S9 :!S0 :left_arrow]] ; -> console.warn()
+                  [:s [:equal_sign :!Speriod :spacebar]] ; -> =>
+                  [:d [:r :e :t :u :r :n :spacebar]] ; -> return
+                  [:f [:!Cf :c :o :n :s :o :l :e :period :l :o :g :!S9 :return_or_enter]] ; -> search console.log( in file
+                  ;[:f [:!Cf :c :o :n :s :o :l :e :period :w :a :r :n :!S9 :return_or_enter]] ; -> search console.warn( in file
+                  [:g [:right_arrow :spacebar :equal_sign :!Speriod :spacebar :!Sopen_bracket :return_or_enter]] ; -> => {}
+                  [:j [:right_arrow :spacebar :equal_sign :spacebar]] ; -> =
+                  [:k [:right_arrow :spacebar :!Sopen_bracket :return_or_enter]] ; -> {  }
+                  [:z [:spacebar :s :t :y :l :e :equal_sign :!Sopen_bracket :!Sclose_bracket :left_arrow]] ; -> style={}
+                  ;[:x [:t :a :c :h :y :o :n :s :spacebar]] ; -> tachyons
+                  ;[:c [:spacebar :s :t :y :l :e :equal_sign :!Sopen_bracket :!Sopen_bracket :!Sclose_bracket :!Sclose_bracket :left_arrow :left_arrow]] ; -> style={{}}
+                  [:c [:spacebar :c :l :a :s :s :!Sn :a :m :e :equal_sign :!Squote :!Squote :left_arrow]] ; -> className=""
+                  [:v [:j :a :v :a :s :c :r :i :p :t :spacebar]] ; -> javascript
+                  [:b [:t :y :p :e :s :c :r :i :p :t :spacebar]]]} ; -> typescript
+        {:des "godot"
+        :rules[:go-mode
+                [:tab [:km "w: GoDoc"]]
+                [:a [:f :m :t :period :!Sp :r :i :n :t :l :n :!S9 :!S0 :left_arrow]] ; -> fmt.Println()
+                [:s [:!Ssemicolon :equal_sign :spacebar]] ; -> :=
+                [:d [:r :e :t :u :r :n :spacebar]] ; -> return
+                [:f [:!Cf :f :m :t :period :p :return_or_enter]] ; -> search fmt.p in file
+                [:g [:i :f :spacebar :e :r :r :spacebar :!S1 :equal_sign :spacebar :n :i :l :spacebar :!Sopen_bracket :return_or_enter]] ; -> if err != nil {}
+                [:j [:grave_accent_and_tilde :j :s :o :n :!Ssemicolon :!Squote :!Squote :grave_accent_and_tilde :left_arrow :left_arrow]] ; -> `json:""`
+                [:z [:l :o :g :period :!Sp :r :i :n :t :l :n :!S9 :!S0 :left_arrow]] ; -> log.Println()
+                [:x [:f :m :t :period :!Sp :r :i :n :t :l :n :!S9 :!S0 :left_arrow :!Squote :hyphen :hyphen]] ; -> fmt.Println("--")
+                [:c [:!STsemicolon]] ; Selection -> Go Playground
+                [:v [:g :o :l :a :n :g :spacebar]] ; -> golang
+                [:b [:l :o :g :period :!Sf :a :t :a :l :!S9 :e :r :r :!S0]]]} ; -> log.Fatal(err)
+        {:des "pydot"
+          :rules[:py-mode
+                 [:a [:p :r :i :n :t :!S9 :!S0 :left_arrow]] ; -> print()
+                 [:s [:hyphen :!Speriod]] ; -> ->
+                 [:d [:r :e :t :u :r :n :spacebar]] ; -> return
+                 [:v [:p :y :t :h :o :n :spacebar]]]} ; -> python
+        {:des   "return_or_enter to control when pressed with other keys"
+              :rules [[:##return_or_enter :left_control [["tmux-windmove-mode" 0] ["k2-mode" 0]] {:alone :return_or_enter}]]}      
       {:des "slash-mode (snippets)"
         :rules [:slash-mode
                  [:b :!S1]]}
