@@ -107,7 +107,7 @@
         {:des   "some simultaneous keys"
               :rules [[[:h :l] [[:alf "helpSearch" "com.tedwise.menubarsearch"] ["in-alfred" 1]]]
                       [[:j :l] [:f19 ["in-alfred" 1]]]
-                      [[:j :k] [:alfred "search google" "net.deanishe.alfred-searchio"]]
+                ;;       [[:j :k] [:alfred "search google" "net.deanishe.alfred-searchio"]]
                       [[:j :semicolon] [:alfred "search tabs" "net.deanishe.alfred.safari"]]
                       [[:l :n] [[:alfred "winswitch" "ru.mandrigin.alfred.sww"] ["in-alfred" 1]]]]}
         {:des "ksim"
@@ -173,8 +173,9 @@
                       [:!Tg [:escape ["in-alfred" 0]] ["in-alfred" 1]]
                       :alfred-mode
                       [:i [:z :i]]
-                      [:h [[:alf "search repos" "com.yqrashawn.ghjump"] ["in-alfred" 1]]]
-                      [:j [:alf "searchGithub" "nikivi.search-the-web"]]
+                      [:j [:alfred "search repos" "me.lachlan.githubjump"]]
+                      ; [:h [[:alf "search repos" "com.yqrashawn.ghjump"] ["in-alfred" 1]]]
+                      [:g [:alf "searchGithub" "nikivi.search-the-web"]]
                       [:##return_or_enter [["in-alfred" 1] [:alf "web searches" "nikivi.web.searches"]]]
                       [:x [:alf "killProcess" "com.ngreenstein.alfred-process-killer"]]
                       [:u [:alf "repos" "net.deanishe.alfred-git-repos"]]
@@ -523,7 +524,6 @@
                  [:a :!!n] ; bartender: search menu bar items
                  [:equal_sign :!Cequal_sign]
                  [:k [:km "open: Keycastr"]]
-                 [:j [:alfred "search repos" "me.lachlan.githubjump"]]
                  [:c [:alfred "search emoji" "com.github.jsumners.alfred-emoji"]]
                  ]}
       {:des "slash-mode (snippets)"
