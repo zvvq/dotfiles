@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
-############################################################################
-#    Author: Wenxuan Zhang                                                 #
-#     Email: wenxuangm@gmail.com                                           #
-#   Created: 2020-01-20 17:36                                              #
-############################################################################
+
 set -euo pipefail
 
 SDIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd) && cd "$SDIR" || return 1
