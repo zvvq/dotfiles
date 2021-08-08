@@ -10,7 +10,8 @@ export PATH="$PATH:/Users/vesselx/Library/Application Support/Coursier/bin"
 export GPG_TTY=$(tty)
 
 # brew
-#  export PATH=$PATH:/usr/local/bin # brew
+export PATH=$PATH:/usr/local/bin # brew
+export PATH="$PATH:$HOME/bin"
 # set SDKroot 
 export SDKROOT=$(xcrun --show-sdk-path)
 

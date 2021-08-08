@@ -17,6 +17,7 @@ ln -sf "$SDIR/zsh_custom"    ~/.zsh_custom
 ln -sf "$SDIR/zsh_fzf_extra" ~/.zsh_fzf_extra
 # ln -sf "$SDIR/zsh_secret"    ~/.zsh_secret
 
+mkdir -p ~/.config/zsh
 ln -sf "$SDIR/zsh_abbr" ~/.config/zsh/abbreviations
 
 # zsh source order:
