@@ -13,11 +13,11 @@
        :select_us       {:select_input_source
                          {:input_mode_id   ""
                           :input_source_id "com.apple.keylayout.US"
-                          :language        "en"}}
-       :select_abc      {:input :abc}}
+                          :language        "en"}}}
+;;        :select_abc      {:input :abc}}
  :modifiers {:ro :right_option}
  :templates {:launch     "osascript -e 'tell application \"Alfred 4\" to run trigger \"launch%s\" in workflow \"yqrashawn.workflow.launcher\" with argument \"\"'"
-            :alf        "open /Applications/Alfred\\ 4.app && osascript -e 'tell application \"Alfred 4\" to run trigger \"%s\" in workflow \"%s\"'"
+             :alf        "open /Applications/Alfred\\ 4.app && osascript -e 'tell application \"Alfred 4\" to run trigger \"%s\" in workflow \"%s\"'"
             :alfred "osascript -e 'tell application \"Alfred 4\" to run trigger \"%s\" in workflow \"%s\" with argument \"%s\"'"
             :km         "osascript -e 'tell application \"Keyboard Maestro Engine\" to do script \"%s\"'"
             :kb-maestro "osascript -e 'tell application \"Keyboard Maestro Engine\" to do script \"%s\"'"
@@ -28,16 +28,21 @@
              :type       "osascript -e 'tell application \"System Events\" to keystroke \"%s\" as text'"
             ;; :focus      "/usr/local/bin/yabai -m display --focus \"%s\" & /usr/local/bin/yabai -m space --focus \"%s\""}
              }
- :layers {   :yabai-scale-mode      {:key :c :condi :tab-mode}
-             :spec-mode             {:key :s :condi :tab-mode}
-             ;; :yabai-insert-mode     {:key :i :condi :tab-mode}
+ :layers {    :yabai-insert-mode     {:key :i :condi :tab-mode}
              :emacs-windmove-mode   {:key :q :condi [:Emacs :!comma-mode :!period-mode]}
              :emacs-windresize-mode {:key :c :condi :emacs-windmove-mode}
              :emacs-bufmove-mode    {:key :f :condi :emacs-windmove-mode}}
- :simlayers {:contexts-f-mode {:key :f}
+ :simlayers {:tab-mode              {:key     :tab
+                                     :afterup [{:set ["yabai-move-mode" 0]}
+                                               {:set ["yabai-scale-mode" 0]}
+                                               {:set ["spec-mode" 0]}]
+                                     :condi   [:!comma-mode :!period-mode]}
+             :yabai-scale-mode      {:key :c :condi :tab-mode}
+             :spec-mode             {:key :s :condi :tab-mode}
+             :contexts-f-mode {:key :f}
              :yabai-move-mode       {:key :f :condi :tab-mode}
              :comma-mode            {:key :comma :condi [:!emacs-s-mode :!tmux-windmove-mode]}
-             :tmux-windmove-mode    {:key :q :condi [:Terminals :!comma-mode :!period-mode]}
+                          :tmux-windmove-mode    {:key :q :condi [:Terminals :!comma-mode :!period-mode]}
              :tmux-windresize-mode  {:key :c :condi :tmux-windmove-mode} 
              :k2-mode               {:key :2 :condi [:!tab-mode :!tmux-windmove-mode]}
              :period-mode           {:key :period :afterup {:set ["period-comma-mode" 0]} :condi [:!emacs-s-mode :!tmux-windmove-mode :!k2-mode]}
@@ -60,12 +65,12 @@
              :r-mode {:key :r}
              :s-mode {:key :s}
              :v-mode {:key :v}
+             :f-mode {:key :f}
              :2-mode {:key :2}
              :3-mode {:key :3}
              :4-mode {:key :4}
              :d-mode {:key :d}
-             :i-mode {:key :i}
-             :f-mode {:key :f}
+             :i-mode {:key :i 
              :n-mode {:key :n}
              :m-mode {:key :m}
              :x-mode {:key :x}
@@ -79,7 +84,7 @@
              :rust-mode {:key :period :condi ["in-rust" 1]}
              :py-mode {:key :period :condi ["in-python" 1]}
              :elixir-mode {:key :period :condi ["in-elixir" 1]}
-             }
+             }}
 ;; ------------ Cheatsheet ------------
  ;; ! stand for mandatory
  ;; # stand for optional
@@ -99,17 +104,26 @@
 ;; :!Fa        "fn a"
 ;; :##a        "keycode a optional any"
 ;; :!!a        "mandatory hyper (control command option shift) a "}}             
+
  :main [{:des "fl to esc, fh to ..."
          :rules
          [[[:f :l] :escape]
           ;; [[:f :h] :escape]
           ]}
+                ;; {:des "select abc"
+                ;; :rules
+                ;; [:19 {:select_input_source
+                ;;         {:input_source_id "^com\\.apple\\.keylayout\\.ABC$"}}]} 
+        
+             {:des   "switch input method"
+              :rules [{:from        {:key_code :left_shift}
+                       :to          [{:key_code :left_shift}]
+                       :to_if_alone [{:select_input_source {:input_source_id "^com\\.apple\\.keylayout\\.US$"}}]
+                       :type        :basic}]}
         {:des "left cmd -> cmd+tab"
          :rules [[:left_command :left_command nil {:alone :!Ctab}]]}
          {:des   "caps_lock"
           :rules [[:##caps_lock :left_control nil {:alone :escape}]]}
-         ;; {:des   "return_or_enter to control when pressed with other keys"
-          ;; :rules [[:##return_or_enter :left_control [["tmux-windmove-mode" 0] ["k2-mode" 0]] {:alone :return_or_enter}]]}
      {:des   "Change right_command to command-tab when used alone"
               :rules [[:right_command :right_command nil {:alone :prev_app}]
                       [:application :right_command nil {:alone :prev_app}]]}
@@ -133,16 +147,16 @@
 
         {:des "ikey (symbols)"
          :rules [:i-mode
-                 [:1 :!S1]
-                 [:2 :!S2]
-                 [:3 :!Sequal_sign]
-                 [:4 :!S8]
-                 [:5 :!S5]
-                 [:q :!Sopen_bracket]
-                 [:w :!S9]
-                 [:e :!S3]
-                 [:r :!Squote]
-                 [:t :quote]
+                 [:1 :!S1] ; !
+                 [:2 :!S2] ; @
+                 [:3 :!Sequal_sign] ; }
+                 [:4 :!S8] ; *
+                 [:5 :!S5] ; %
+                 [:q :!Sopen_bracket] ; ?
+                 [:w :!S9] ; (
+                 [:e :!S3] ; #
+                 [:r :!Squote] ; _
+                 [:t :quote] ; '
                  [:o :open_bracket] ; [
                  [:p :close_bracket] ; ]
                  [:open_bracket :!Sclose_bracket] ; }
@@ -241,7 +255,7 @@
                       [:spacebar "~/Dropbox/sync/pullover/pullover-start-or-finish"]
                       #_[:right_command :!!3]]}
                 {:des "2key (move + alfred)"
-         :rules [:2-mode
+                :rules [:2-mode
                  [:o [:alfred "soulver" "app.soulver.alfredworkflow"]]
                  [:j :!Cdown_arrow]
                  [:k :!Cup_arrow]
@@ -277,15 +291,15 @@
                  [:k [:km "list: Alfred workflows"]]
                  [:l [:km "list: Command line tools"]]
                  [:n [:km "list: Events"]]]}
-        {:des "tabkey (websites)"
-         :rules [:tab-mode
-                 ;[:j :!SOTw] ; Replies
-                 ;[:k :!SOTf] ; App specific
-                 ;[:l :!SOTr] ; Personal
-                 [:j [:km "w: nikitavoloboev.xyz"]]
-                 [:k [:km "w: GitLab"]]
-                 [:l [:km "w: Repl.it"]]
-                 [:period [:km "w: CodeSandbox"]]]}
+        ;; {:des "tabkey (websites)"
+        ;;  :rules [:tab-mode
+        ;;          ;[:j :!SOTw] ; Replies
+        ;;          ;[:k :!SOTf] ; App specific
+        ;;          ;[:l :!SOTr] ; Personal
+        ;;          [:j [:km "w: nikitavoloboev.xyz"]]
+        ;;          [:k [:km "w: GitLab"]]
+        ;;          [:l [:km "w: Repl.it"]]
+        ;;          [:period [:km "w: CodeSandbox"]]]}
         {:des "vkey (media)"
                  :rules [:v-mode
                  [:q :illumination_decrement]
@@ -580,6 +594,24 @@
                       [:k :up_arrow ["in-contexts" 1]]
                       [:e [:f :e]]
                       [:l [:return_or_enter ["in-contexts" 0]] ["in-contexts" 1]]]}
+        ;; {:des "fkey (essential)"
+        ;;  :rules [:f-mode
+        ;;          [:q [:km "open: Photos"]]
+        ;;          [:w [:km "open: Chrome Canary  / VS Code"]]
+        ;;          [:a [:km "open: Figma"]]
+        ;;          [:s [:km "edit: 2nd iTerm tab"]]
+        ;;          [:h [:km "Make markdown link from selection {link}"]]
+        ;;         ;;  [:j [:km "edit: 1st iTerm tab"]]
+        ;;         ;;  [:k :return_or_enter]
+        ;;          [:l :!Creturn_or_enter]
+        ;;          [:semicolon [:km "edit: Karabiner"]]
+        ;;          [:z :!Ospacebar] ; Switch language (Russian <-> English)
+        ;;          [:n :!Freturn_or_enter]
+        ;;          [:m :!Sreturn_or_enter]
+        ;;          [:comma  [:km "Add safari link to selected markdown text"]]
+        ;;          [:period :!CTO4] ; Alfred file action
+        ;;          [:spacebar :!CTq]]} ; Selection -> Web Searches
+
         {:des   "in-alfred"
               :rules [:in-alfred
                       [:!Tw :!Odelete_or_backspace]
@@ -663,8 +695,7 @@
 ;;                  [:comma [:km "w: Diagrams"]]
 ;;                  [:period [:km "w: YouTube"]]
                  [:slash [:km "w: GitHub PR"]]]} ; TODO:
-;; ]}        
-        {:des "okey (alfred)"
+         {:des "o-mode (alfred)"
          :rules [:o-mode
                  [:1 :!C1]
                  [:2 :!C2]
@@ -676,7 +707,7 @@
                  [:8 :!C8]
                  [:9 :!C9]
                  [:0 :!C0]
-                 [:a :!!n] ; bartender: search menu bar items
+                ;;  [:a :!!n] ; bartender: search menu bar items
                  [:equal_sign :!Cequal_sign]
                  [:k [:km "open: Keycastr"]]
                  [:c [:alfred "search emoji" "com.github.jsumners.alfred-emoji"]]
@@ -685,6 +716,10 @@
                  [:d [:alfred "search repos" "net.deanishe.alfred-git-repos"]]
                  [:j [:alfred "run" "iansinnott.keyboardmaestro"]]
                  [:f [:alfred "search folders" "nikivi.search.folders"]]
+                [:u [:km "open: Ulysses"]]
+                [:i [:km "open: Music"]]
+                [:p [:km "open: Paste"]]
+                [:x [:km "open: Screens"]]
                  ]}
         {:des "xkey (spotify)"
          :rules [:x-mode
@@ -728,7 +763,60 @@
                  [:##b :!Cleft_arrow]
                  [:n :!Cv] ; Paste
                  [:##m :!Cright_arrow]
+                [:spacebar [:open "/System/Applications/Siri.app"]]
                  [:period :!COS0]]} ; Selection -> Alfred Snippets TODO:                  
+        {:des "dkey (mouse-keys-mode)"
+         :rules [:d-mode
+                                        ; buttons
+                 [:v {:pkey :button1}]
+                 [:b {:pkey :button3}]
+                 [:n {:pkey :button2}]
+                                        ; movement
+                 [:h {:mkey {:x -1536}} :!mouse-scroll-mode ]
+                 [:j {:mkey {:y  1536}} :!mouse-scroll-mode ]
+                 [:k {:mkey {:y -1536}} :!mouse-scroll-mode ]
+                 [:l {:mkey {:x  1536}} :!mouse-scroll-mode ]
+                                        ; speed - hold 'a' for slower, 'f' for faster
+                 [:a {:mkey {:speed 0.5}} nil {:afterup {:mkey {:speed 1.0}} }]
+                 [:f {:mkey {:speed 2.0}} nil {:afterup {:mkey {:speed 1.0}} }]
+
+                                        ; scrolling
+                 [:s ["mouse-scroll-mode" 1] nil { :afterup ["mouse-scroll-mode" 0] }]
+                 [:h {:mkey {:hwheel -32}} :mouse-scroll-mode ]
+                 [:j {:mkey {:vwheel  32}} :mouse-scroll-mode ]
+                 [:k {:mkey {:vwheel -32}} :mouse-scroll-mode ]
+                 [:l {:mkey {:hwheel  32}} :mouse-scroll-mode ]
+                 ]}
+        {:des "dkey (mouse)"
+         :rules [:d-mode
+                 [:w [:km "Google Searchio selected word"]]
+                 [:u [:km "Google Lucky selected word"]]
+                 [:i :!Ckeypad_hyphen] ; Zoom out
+                 [:o :!Ckeypad_plus] ; Zoom in
+                 [:k {:mkey {:vwheel -60}}] ; Scroll up
+                 ;[:l [:km "Google selected word"]]
+                 [:semicolon [:km "Google clipboard"]]
+                 [:quote [:km "Select line and google"]]
+                 [:n [:km "Open URL in clipboard in Safari"]]
+                 [:comma :!TO8] ; Show Launchpad
+                 [:period :!CTO3] ; Mission control
+                 [:spacebar :!Wsemicolon]]} ; Dictation
+        {:des "gkey (actions)"
+         :rules [:g-mode
+                 [:q :!CT3] ; Search bartender menu items
+                 [:w :!CSgrave_accent_and_tilde] ; Switch between active windows (go up)
+                 [:e [:km "Go to test macro"]]
+                 [:r [:km "Test"]]
+                 [:caps_lock [:km "Go to KM group of current app from picklist"]]
+                 [:a [:km "Go to KM group of current app"]]
+                 [:s [:km "Dismiss notifications"]]
+                 [:d [:km "Make global macro"]] ; TODO: create global macro from Test (clear test, focus on naming new macro)
+                 [:h :!CSOa] ; Move window left
+                 [:j :!Cgrave_accent_and_tilde] ; Switch between active windows  (go down)
+                 [:k :!COSf] ; Maximize window
+                 [:l :!CSOd] ; Move window right
+                 [:semicolon :!COSs] ; Move window between different screen & maximize (iPad)
+                 [:z :!CO0]]} ; Show Dropzone dropdown
         {:des "commakey (words)"
          :rules [:comma-mode
                  [:w [:n :i :k :i :v :i]] ; -> nikivi
@@ -787,18 +875,17 @@
                  [:s [:hyphen :!Speriod]] ; -> ->
                  [:d [:r :e :t :u :r :n :spacebar]] ; -> return
                  [:v [:p :y :t :h :o :n :spacebar]]]} ; -> python
-        {:des   "return_or_enter to control when pressed with other keys"
-              :rules [[:##return_or_enter :left_control [["tmux-windmove-mode" 0] ["k2-mode" 0]] {:alone :return_or_enter}]]}      
       {:des "slash-mode (snippets)"
         :rules [:slash-mode
                  [:b :!S1]]}
-            {:des   "global C-h to backspace"
-                 :rules [[:!Th :delete_or_backspace nil {:params {:alone 500 :held 500}}]]}]
+        {:des   "global C-h to backspace"
+        :rules [[:!Th :delete_or_backspace nil {:params {:alone 500 :held 500}}]]}
+ ]
  :devices {:macbook-air [{:product_id 641 :vendor_id 1452}]
            :hhkb          [{:vendor_id 1278 :product_id 33}]
            :magic-keypad [{:product_id 620 :vendor_id 76}]
            :rf [{:product_id 328 :vendor_id 2131}]}
-:applications       {:emacs-mode-disable-app        ["^org\\.gnu\\.Emacs$",
+ :applications       {:emacs-mode-disable-app        ["^org\\.gnu\\.Emacs$",
                                                       "^org\\.gnu\\.AquamacsEmacs$",
                                                       "^org\\.gnu\\.Aquamacs$",
                                                       "^org\\.pqrs\\.unknownapp.conkeror$",
