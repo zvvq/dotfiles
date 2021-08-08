@@ -9,7 +9,7 @@ git config --global user.email "paybdd@gmail.com"
 git config --global github.user "brendendurham"
 git config --global color.ui true
 
-	# avoid entering password again and again
+# avoid entering password again and again
 if [[ -z "${SSH_CLIENT-}" ]]; then
     case $OSTYPE in
         linux* )
