@@ -1,0 +1,13 @@
+"*":
+  core:
+    telemetryConsent: "no"
+  "exception-reporting":
+    userId: "63bcdc5a-1144-4c19-b34f-1037ed340f7b"
+  welcome:
+    showOnStartup: false
+  editor:
+    preferredLineLength: 70
+  "runner":
+    "scopes":
+      "python": "python3"
+      "py": "python3"
